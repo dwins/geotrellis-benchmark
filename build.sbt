@@ -23,7 +23,7 @@ lazy val commonSettings = Seq(
 ) ++ net.virtualvoid.sbt.graph.Plugin.graphSettings
 
 lazy val root = Project("root", file(".")).
-  dependsOn(geotrellisRaster)
+  dependsOn(geotrellisRaster, geotrellisVector, geotrellis09)
 
 lazy val geotrellisRaster = Project("geotrellis-raster-benchmark", file("geotrellis/raster")).
   settings(commonSettings: _*)

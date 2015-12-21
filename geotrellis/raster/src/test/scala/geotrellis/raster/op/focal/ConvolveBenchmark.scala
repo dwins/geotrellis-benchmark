@@ -1,6 +1,7 @@
 package benchmark.geotrellis.raster.op.focal
 
 import geotrellis.raster._
+import geotrellis.raster.op.global._
 import geotrellis.raster.op.focal._
 import geotrellis.raster.io.geotiff._
 

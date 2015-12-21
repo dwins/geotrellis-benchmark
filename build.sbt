@@ -28,5 +28,8 @@ lazy val root = Project("root", file(".")).
 lazy val geotrellisRaster = Project("geotrellis-raster-benchmark", file("geotrellis/raster")).
   settings(commonSettings: _*)
 
+lazy val geotrellisVector = Project("geotrellis-vector-benchmark", file("geotrellis/vector")).
+  settings(commonSettings: _*)
+
 lazy val geotrellis09 = Project("geotrellis09-benchmark", file("geotrellis09")).
   settings(commonSettings: _*)

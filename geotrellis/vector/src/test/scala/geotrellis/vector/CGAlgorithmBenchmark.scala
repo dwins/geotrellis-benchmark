@@ -4,6 +4,7 @@ import scaliper._
 import com.vividsolutions.jts.{ geom => jts }
 import com.vividsolutions.jts.algorithm.CGAlgorithms.isPointInRing
 import com.vividsolutions.jts.densify.Densifier.densify
+import com.vividsolutions.jts.geom.prep.PreparedGeometryFactory.prepare
 
 trait CGAlgorithmSetup { self: Benchmark =>
   override def setUp() = {}
@@ -45,6 +46,28 @@ class CGAlgorithmBenchmark extends Benchmarks with ConsoleReport with EndpointRe
           rings = (Iterator.from(1)
             .map { i =>
               densify(ring, math.pow(2d, -i)).asInstanceOf[jts.Polygon]
+            }.take(10)
+            .to[Vector])
+        }
+        def run() = {
+          rings.map { r =>
+            r.contains(point)
+          }
+        }
+      }
+
+    }
+    run("prepare(Polygon).contains(Point)") {
+      new Benchmark with CGAlgorithmSetup {
+        var point: jts.Point = _
+        var rings: Vector[jts.prep.PreparedPolygon] = _
+        override def setUp() = {
+          val pt = Point(0, 0)
+          point = Point(0.99, 0.99).jtsGeom
+          val ring = pt.buffer(1).jtsGeom
+          rings = (Iterator.from(1)
+            .map { i =>
+              prepare(densify(ring, math.pow(2d, -i))).asInstanceOf[jts.prep.PreparedPolygon]
             }.take(10)
             .to[Vector])
         }
